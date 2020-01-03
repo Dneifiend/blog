@@ -36,6 +36,9 @@ a.tag.article-tag {
   padding-top: 2rem;
   border-top: 1px solid #dbdbdb; }
 
+.article .article-title {
+  font-weight: bold; }
+
 .article .article-title a,
 .article .article-meta a {
   color: inherit;
