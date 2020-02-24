@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url("https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Gothic+Coding&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Do+Hyeon|Nanum+Gothic|Nanum+Gothic+Coding|Nanum+Myeongjo&display=swap");
 body,
 button,
 input,
@@ -42,10 +42,11 @@ a.tag.article-tag {
 .article .article-title a,
 .article .article-meta a {
   color: inherit;
-  border-bottom: 1px dotted transparent; }
+  border-bottom: 1px solid transparent; }
   .article .article-title a:hover,
   .article .article-meta a:hover {
-    border-bottom-color: black; }
+    color: #3273dc;
+    border-bottom-color: #3273dc; }
 
 .article .article-meta {
   font-size: .9rem;
@@ -61,6 +62,8 @@ a.tag.article-tag {
 
 .article .article-entry {
   margin-bottom: 3rem; }
+  .article .article-entry h1 {
+    font-weight: 700; }
   .article .article-entry h1,
   .article .article-entry h2,
   .article .article-entry h3,
@@ -498,3 +501,7 @@ figure.highlight {
 .ins-section .ins-search-item:hover .ins-search-preview,
 .ins-section .ins-search-item.active .ins-search-preview {
   color: #fff; }
+
+.category-group > span:first-child > a {
+  color: white;
+  background-color: #595959; }

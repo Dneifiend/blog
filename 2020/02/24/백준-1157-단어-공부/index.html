@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>백준 1157 단어 공부 node.js - DNEIF Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="게임 QA 블로그입니다.">
+
+
+
+
+
+    <meta name="description" content="문제알파벳 대소문자로 된 단어가 주어지면, 이 단어에서 가장 많이 사용된 알파벳이 무엇인지 알아내는 프로그램을 작성하시오. 단, 대문자와 소문자를 구분하지 않는다. 입력첫째 줄에 알파벳 대소문자로 이루어진 단어가 주어진다. 주어지는 단어의 길이는 1,000,000을 넘지 않는다. 출력첫째 줄에 이 단어에서 가장 많이 사용된 알파벳을 대문자로 출력한다. 단,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="백준 1157 단어 공부 node.js">
+<meta property="og:url" content="https://dneifiend.github.io/2020/02/24/%EB%B0%B1%EC%A4%80-1157-%EB%8B%A8%EC%96%B4-%EA%B3%B5%EB%B6%80/index.html">
+<meta property="og:site_name" content="DNEIF Blog">
+<meta property="og:description" content="문제알파벳 대소문자로 된 단어가 주어지면, 이 단어에서 가장 많이 사용된 알파벳이 무엇인지 알아내는 프로그램을 작성하시오. 단, 대문자와 소문자를 구분하지 않는다. 입력첫째 줄에 알파벳 대소문자로 이루어진 단어가 주어진다. 주어지는 단어의 길이는 1,000,000을 넘지 않는다. 출력첫째 줄에 이 단어에서 가장 많이 사용된 알파벳을 대문자로 출력한다. 단,">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2020-02-24T01:37:56.470Z">
+<meta property="article:modified_time" content="2020-02-24T06:35:46.668Z">
+<meta property="article:author" content="DNEIF">
+<meta property="article:tag" content="node.js">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/images/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    <img src="/images/dneif_logo.png" alt="" height="28">
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">Archives</a>
+            
+            <a class="navbar-item "
+               href="/categories/dev">Dev</a>
+            
+            <a class="navbar-item "
+               href="/categories">Category</a>
+            
+            <a class="navbar-item "
+               href="/tags">Tag</a>
+            
+            <a class="navbar-item "
+               href="/about">About</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="검색" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="목차">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#문제">1&nbsp;&nbsp;<b>문제</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#입력">2&nbsp;&nbsp;<b>입력</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#출력">3&nbsp;&nbsp;<b>출력</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#예제-1">3.1&nbsp;&nbsp;예제 1</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#예제-2">3.2&nbsp;&nbsp;예제 2</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#예제-3">3.3&nbsp;&nbsp;예제 3</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#예제-4">3.4&nbsp;&nbsp;예제 4</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#내가-한-통과-코드">4&nbsp;&nbsp;<b>내가 한 통과 코드</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#포인트">4.1.1&nbsp;&nbsp;포인트</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#다른사람-빠른-시간-코드">5&nbsp;&nbsp;<b>다른사람 빠른 시간 코드</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#포인트-1">5.1.1&nbsp;&nbsp;포인트</a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" href="https://github.com/dneifiend" target="_blank" rel="noopener">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+        백준 1157 단어 공부 node.js
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2020-02-24T01:37:56.470Z"
+                itemprop="datePublished">2월 24 2020</time>
+        </span>
+        
+        <span class="column is-narrow article-category">
+            <i class="far fa-folder"></i>
+            <a class="article-category-link" href="/categories/dev/">dev</a>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            3분 소요 (약 513 단어)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+        
+        <html><head></head><body><h2 id="문제"><a href="#문제" class="headerlink" title="문제"></a>문제</h2><p>알파벳 대소문자로 된 단어가 주어지면, 이 단어에서 가장 많이 사용된 알파벳이 무엇인지 알아내는 프로그램을 작성하시오. 단, 대문자와 소문자를 구분하지 않는다.</p>
+<h2 id="입력"><a href="#입력" class="headerlink" title="입력"></a>입력</h2><p>첫째 줄에 알파벳 대소문자로 이루어진 단어가 주어진다. 주어지는 단어의 길이는 1,000,000을 넘지 않는다.</p>
+<h2 id="출력"><a href="#출력" class="headerlink" title="출력"></a>출력</h2><p>첫째 줄에 이 단어에서 가장 많이 사용된 알파벳을 대문자로 출력한다. 단, 가장 많이 사용된 알파벳이 여러 개 존재하는 경우에는 ?를 출력한다.</p>
+<a id="more"></a>
+
+<p><a href="https://www.acmicpc.net/problem/1157" target="_blank" rel="noopener">https://www.acmicpc.net/problem/1157</a></p>
+<hr>
+<h3 id="예제-1"><a href="#예제-1" class="headerlink" title="예제 1"></a>예제 1</h3><p></p><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Mississipi</span><br><span class="line">> ?</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h3 id="예제-2"><a href="#예제-2" class="headerlink" title="예제 2"></a>예제 2</h3><p></p><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">zZa</span><br><span class="line">> Z</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h3 id="예제-3"><a href="#예제-3" class="headerlink" title="예제 3"></a>예제 3</h3><p></p><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">z</span><br><span class="line">> Z</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h3 id="예제-4"><a href="#예제-4" class="headerlink" title="예제 4"></a>예제 4</h3><p></p><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">baaa</span><br><span class="line">> A</span><br></pre></td></tr></tbody></table></figure><p></p>
+<hr>
+<h2 id="내가-한-통과-코드"><a href="#내가-한-통과-코드" class="headerlink" title="내가 한 통과 코드"></a>내가 한 통과 코드</h2><p></p><figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);</span><br><span class="line"><span class="hljs-keyword">var</span> word = fs.readFileSync(<span class="hljs-string">'/dev/stdin'</span>).toString().toUpperCase().split(<span class="hljs-string">''</span>);</span><br><span class="line"><span class="hljs-comment">// var word = 'baa'.toString().toUpperCase().split('');</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">var</span> obj = word.reduce(<span class="hljs-function">(<span class="hljs-params">p, c, i</span>) =></span> {</span><br><span class="line">    <span class="hljs-keyword">if</span> (p[c]) {</span><br><span class="line">        p[c]++;</span><br><span class="line">        <span class="hljs-keyword">if</span> (p[c] > p.mx1[<span class="hljs-number">0</span>]) {</span><br><span class="line">            p.mx2[<span class="hljs-number">0</span>] = p.mx1[<span class="hljs-number">0</span>]</span><br><span class="line">            p.mx1[<span class="hljs-number">0</span>] = p[c];</span><br><span class="line">            p.mx1[<span class="hljs-number">1</span>] = c;</span><br><span class="line">        }</span><br><span class="line">        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (p[c] == p.mx1[<span class="hljs-number">0</span>]) {</span><br><span class="line">            p.mx2[<span class="hljs-number">0</span>] = p[c];</span><br><span class="line">            p.mx2[<span class="hljs-number">1</span>] = c;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">    } <span class="hljs-keyword">else</span> {</span><br><span class="line">        p[c] = <span class="hljs-number">1</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span> (i === <span class="hljs-number">0</span>) {</span><br><span class="line">            p.mx1[<span class="hljs-number">1</span>] = c;</span><br><span class="line">            p.mx2[<span class="hljs-number">1</span>] = c;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-keyword">return</span> p;</span><br><span class="line">}, {</span><br><span class="line">    mx1: [<span class="hljs-number">1</span>, <span class="hljs-string">''</span>],</span><br><span class="line">    mx2: [<span class="hljs-number">1</span>, <span class="hljs-string">''</span>],</span><br><span class="line">});</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">console</span>.log(obj.mx1[<span class="hljs-number">1</span>] == obj.mx2[<span class="hljs-number">1</span>] ? obj.mx1[<span class="hljs-number">1</span>] : <span class="hljs-string">'?'</span>);</span><br></pre></td></tr></tbody></table></figure><p></p>
+<table>
+<thead>
+<tr>
+<th align="center">구분</th>
+<th align="right">값</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">언어</td>
+<td align="right">node.js</td>
+</tr>
+<tr>
+<td align="center">메모리</td>
+<td align="right">36292 KB</td>
+</tr>
+<tr>
+<td align="center">시간</td>
+<td align="right">296 ms</td>
+</tr>
+</tbody></table>
+<h4 id="포인트"><a href="#포인트" class="headerlink" title="포인트"></a>포인트</h4><ul>
+<li><code>Array.reduce()</code>를 통해 mx1, mx2 로 나누어 한 번의 loof만으로 가능</li>
+<li>한 번만에 가능하기위해 매 번 if 조건 체크 필요</li>
+</ul>
+<hr>
+<h2 id="다른사람-빠른-시간-코드"><a href="#다른사람-빠른-시간-코드" class="headerlink" title="다른사람 빠른 시간 코드"></a>다른사람 빠른 시간 코드</h2><p></p><figure class="highlight js hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> input = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>).readFileSync(<span class="hljs-string">'/dev/stdin'</span>).toString();</span><br><span class="line"><span class="hljs-keyword">var</span> Alphabet = [];</span><br><span class="line"><span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i < <span class="hljs-number">26</span>; i++){</span><br><span class="line">    Alphabet[i] = <span class="hljs-number">0</span></span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">//console.log(Alphabet)</span></span><br><span class="line"><span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i < input.length; i ++){</span><br><span class="line">    <span class="hljs-keyword">var</span> Code = input.charCodeAt(i)</span><br><span class="line">    Code >= <span class="hljs-number">97</span> ? Code -= <span class="hljs-number">32</span> : Code = Code</span><br><span class="line">    Alphabet[Code<span class="hljs-number">-65</span>] += <span class="hljs-number">1</span></span><br><span class="line">} </span><br><span class="line"><span class="hljs-comment">//console.log(Alphabet)</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">var</span> Max = Alphabet.reduce(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"> prev, curr</span>)</span>{</span><br><span class="line">    <span class="hljs-keyword">return</span> prev > curr ? prev : curr</span><br><span class="line">})</span><br><span class="line"><span class="hljs-comment">//console.log(Max)</span></span><br><span class="line"><span class="hljs-keyword">if</span>(Alphabet.indexOf(Max)!=Alphabet.lastIndexOf(Max)){</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"?"</span>)</span><br><span class="line">}<span class="hljs-keyword">else</span> {</span><br><span class="line"><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">String</span>.fromCharCode(Alphabet.indexOf(Max) + <span class="hljs-number">65</span>))</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<table>
+<thead>
+<tr>
+<th align="center">구분</th>
+<th align="right">값</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">언어</td>
+<td align="right">node.js</td>
+</tr>
+<tr>
+<td align="center">메모리</td>
+<td align="right">720240 KB</td>
+</tr>
+<tr>
+<td align="center">시간</td>
+<td align="right">64 ms</td>
+</tr>
+</tbody></table>
+<h4 id="포인트-1"><a href="#포인트-1" class="headerlink" title="포인트"></a>포인트</h4><ul>
+<li><code>charCodeAt()</code>을 통해 int 로 처리하면 시간 단축.</li>
+<li>Max를 <code>Math.max()</code> 안하고 reduce로 Alphabet Array 안에서 처리</li>
+<li>메모리는 내 코드 대비 20배 많이 사용했으나, 4배 더 빠름.</li>
+<li>빠른 처리가 중요한 상황에서는 이러한 방식이 유용할 듯</li>
+</ul>
+<p><a href="https://www.acmicpc.net/source/6510103" target="_blank" rel="noopener">https://www.acmicpc.net/source/6510103</a></p>
+</body></html>
+        
+    </div>
+
+
+
+
+    
+
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+        
+        <span class="column is-narrow"><a class="tag is-light article-tag"
+                href="/tags/node-js/">#node.js</a></span>
+        
+    </div>
+    
+
+
+
+    <!-- 카테고리 최신 글 시작-->
+    
+    
+    <hr>
+    <h3 class="article-title is-size-4 is-size-5-mobile"><a
+            href="/categories/dev/">dev</a> 카테고리의 다른 글</h3>
+    <div style="margin-bottom: 1.2em">
+        <ul>
+            
+            
+            
+            <li style="color: #6b6b6b;"><a href="/2020/02/24/%EB%B0%B1%EC%A4%80-10818-%EC%B5%9C%EC%86%8C-%EC%B5%9C%EB%8C%80-node-js/">백준 10818 최소, 최대 node.js</a> -
+                2020/02/24
+            </li>
+            
+            
+            
+            
+            <li style="color: #6b6b6b;"><a href="/2020/02/24/%EB%B0%B1%EC%A4%80-1157-%EB%8B%A8%EC%96%B4-%EA%B3%B5%EB%B6%80/">백준 1157 단어 공부 node.js</a> -
+                2020/02/24
+            </li>
+            
+            
+            
+        </ul>
+    </div>
+    
+    <!-- 카테고리 최신 글 종료 -->
+
+
+    <!-- 최근 포스트 시작 -->
+    
+    <hr>
+    <div style="margin-bottom: 1.2em">
+        <h3 class="article-title is-size-4 is-size-5-mobile">최근 포스트</h3>
+        <ul>
+            
+            
+            <li><a href="/2020/02/24/%EB%B0%B1%EC%A4%80-1157-%EB%8B%A8%EC%96%B4-%EA%B3%B5%EB%B6%80/">백준 1157 단어 공부 node.js</a>
+                - 2020/02/24</li>
+            
+        </ul>
+    </div>
+    
+    <!-- 최근 포스트 종료 -->
+
+
+
+
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2020/02/24/%EB%B0%B1%EC%A4%80-10818-%EC%B5%9C%EC%86%8C-%EC%B5%9C%EB%8C%80-node-js/">백준 10818 최소, 최대 node.js</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop is-hidden-mobile article-nav-next">
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+
+<div class="sharebox">
+    
+<div class="sharethis-inline-share-buttons"></div>
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5e0eac9736e59500129c1120&amp;product=inline-share-buttons' async='async'></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">댓글</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'https://dneifiend.github.io/2020/02/24/%EB%B0%B1%EC%A4%80-1157-%EB%8B%A8%EC%96%B4-%EA%B3%B5%EB%B6%80/';
+        this.page.identifier = '2020/02/24/백준-1157-단어-공부/';
+        
+        this.language = 'ko';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'dgame' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 DNEIF&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                    href="http://github.com/ppoffice/hexo-theme-minos" target="_blank">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                    
+                    
+                    <a class="column is-narrow has-text-black" title="GitHub"
+                        href="https://github.com/dneifiend">
+                        
+                        GitHub
+                        
+                    </a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("ko");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="검색할 단어를 입력하세요" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '글',
+                PAGES: '페이지',
+                CATEGORIES: '카테고리 목록',
+                TAGS: '태그 목록',
+                UNTITLED: '(제목없음)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>
